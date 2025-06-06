@@ -95,7 +95,7 @@
               <div class="publication-links">
                 <!-- PDF Link. -->
                 <span class="link-block">
-                  <a href="./static/pdf/Physics3D.pdf"
+                  <a href="./static/pdf/RealPlay.pdf"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                         <i class="fas fa-file-pdf"></i>
@@ -105,7 +105,7 @@
                 </span>
                 <!-- arxiv Link. -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/2406.04338" class="external-link button is-normal is-rounded is-dark">
+                  <a href="https://wenqsun.github.io/RealPlay/" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="ai ai-arxiv"></i>
                     </span>
@@ -114,7 +114,7 @@
                 </span>
                 <!-- Code Link. -->
                 <span class="link-block">
-                  <a href="https://github.com/liuff19/Physics3D"
+                  <a href="https://wenqsun.github.io/RealPlay/"
                     class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
@@ -130,7 +130,7 @@
     </div>
   </section>
 
-  <section class="hero is-light is-small">
+  <!-- <section class="hero is-light is-small">
     <div class="container is-max-desktop">
       <div class="hero-body">
         <video autoplay controls muted loop playsinline weight="100%">
@@ -141,7 +141,7 @@
         </h2>
       </div>
     </div>
-  </section>
+  </section> -->
   
   <section class="section">
     <div class="container is-max-desktop">
@@ -151,7 +151,7 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              In recent years, there has been rapid development in 3D generation models, opening up new possibilities for applications such as simulating the dynamic movements of 3D objects and customizing their behaviors. However, current 3D generative models tend to focus only on surface features such as color and shape, neglecting the inherent physical properties that govern the behavior of objects in the real world. To accurately simulate physics-aligned dynamics, it is essential to predict the physical properties of materials and incorporate them into the behavior prediction process. Nonetheless, predicting the diverse materials of real-world objects is still challenging due to the complex nature of their physical attributes. In this paper, we propose <strong>Physics3D</strong>, a novel method for learning various physical properties of 3D objects through a video diffusion model. Our approach involves designing a highly generalizable physical simulation system based on a viscoelastic material model, which enables us to simulate a wide range of materials with high-fidelity capabilities. Moreover, we distill the physical priors from a video diffusion model that contains more understanding of realistic object materials.
+              We introduce RealPlay, a neural network-based real-world game engine that enables interactive video generation from user control signals. Unlike prior works focused on game-style visuals, RealPlay aims to produce photorealistic, temporally consistent video sequences that resemble real-world footage. It operates in an interactive loop: users observe a generated scene, issue a control command, and receive a short video chunk in response. To enable such realistic and responsive generation, we address key challenges including iterative chunk-wise prediction for low-latency feedback, temporal consistency across iterations, and accurate control response. RealPlay is trained on a combination of labeled game data and unlabeled real-world videos, without requiring real-world action annotations. Notably, we observe two forms of generalization: (1) control transfer—RealPlay effectively maps control signals from virtual to real-world scenarios; and (2) entity transfer—although training labels originate solely from a car racing game, RealPlay generalizes to control diverse real-world entities, including bicycles and pedestrians, beyond vehicles.
             </p>
           </div>
         </div>
@@ -165,9 +165,9 @@
         <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
           <source src="./static/videos/teaser.mp4" type="video/mp4">
         </video> -->
-        <img src="./static/images/teaser.png" class="interpolation-image" />
+        <img src="./static/images/teaser.jpg" class="interpolation-image" />
         <h2 class="subtitle has-text-centered">
-          <span class="dnerf">Physics3D</span> is a unified simulation-rendering pipeline based on 3D Gaussians, which learn physics dynamics from video diffusion model.
+          RealPlay is 
         </h2>
       </div>
     </div>
@@ -176,14 +176,9 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3">Pipeline</h2>
-      <img src="./static/images/pipeline.png" class="interpolation-image" />
+      <img src="./static/images/overview.jpg" class="interpolation-image" />
       <p>
-        Given an object represented as 3D Gaussians, We first simulate it using the Material Point Method (MPM). 
-        The simulation comprises two distinct components: an elastoplastic part and a viscoelastic part. 
-        These components operate independently to calculate the individual stresses within the object and are combined to determine the overall stress. 
-        After the simulation, a series of Gaussians with varying orientations are generated, reflecting the dynamic evolution of the scene. 
-        Then, we render these Gaussians from a fixed viewpoint to produce a sequence of video frames. 
-        Finally, we utilize a pretrained video diffusion model with Score Distillation Sampling (SDS) strategy to iteratively optimize physical parameters.
+        RealPlay involves a two-stage training process. <i class="italic-text">Stage-1</i>: We adapt a pre-trained image-to-video generator (Figure (a))—which generates an entire video in a single pass conditioned on a single frame—into a chunk-wise generation model (Figure (b)), which generates video chunks iteratively, conditioned on the previously generated chunk. This adaptation includes several key modifications detailed in Section 3.1. <i class="italic-text">Stage-2</i>: RealPlay (Figure (c)) is trained on a combination of a labeled game dataset and an unlabeled real-world dataset, enabling action transfer from controlling a car in the game environment to manipulating various entities in the real world. This is achieved by modifying the chunk-wise generation model to incorporate action control through an adaptive LayerNorm mechanism.
       </p>
     </div>
   </section>
@@ -191,11 +186,6 @@
   <section class="section">
     <div class="container is-max-desktop">
       <h2 class="title is-3">Autoregressive Video Generation</h2>
-      <p>
-        We show the visual results of our approach across a wide range of materials, including elastic entities,
-        plastic metals, and fibre materials. 
-        Physics3D achieves high-fidelity and realistic performance in a wide range of materials.
-      </p>
       <br>
       <div class="columns is-multiline">
         <div class="column is-one-quarter">
@@ -276,109 +266,12 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3">Comparison with baselines</h2>
-      <p>
-        Visual comparison between our synthesized videos and baseline methods (PhysDreamer, DreamGaussian4D and PhysGaussian). 
-        We show that Physics3D is able to generate realistic scene movement while maintaining good motion consistency.
-      </p>
-      <br>
-      <div class="columns is-centered">
-        <div class="column">
-          <div class="content">
-            <table style="margin-left: auto; margin-right: auto; width: 90%;">
-              <tbody>
-                <tr>
-                  <th style="text-align: center;width: 10%;"></th>
-                  <th style="text-align: center;width: 18%;">Real Capture</th>
-                  <th style="text-align: center;width: 18%;">Ours</th>
-                  <th style="text-align: center;width: 18%;">PhysDreamer</th>
-                  <th style="text-align: center;width: 18%;">PhysGaussian</th>
-                  <th style="text-align: center;width: 18%;">DreamGaussian4D</th>
-                </tr>
-                <tr>
-                  <th style="vertical-align: center;font-style:italic; text-align: center;width: 10%;">hat</th>
-                  <td rowspan="1" colspan="5" style="width: 100%">
-                    <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-                      <source src="./static/videos/compare_hat.mp4" type="video/mp4">
-                    </video>
-                  </td>
-                </tr>
-                <tr>
-                  <th style="vertical-align: center;font-style:italic; text-align: center;width: 10%;">alocasia</th>
-                  <td rowspan="1" colspan="5" style="width: 100%">
-                    <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-                      <source src="./static/videos/compare_alocasia.mp4" type="video/mp4">
-                    </video>
-                  </td>
-                </tr>
-                <tr>
-                  <th style="vertical-align: center;font-style:italic; text-align: center;width: 10%;">carnation</th>
-                  <td rowspan="1" colspan="5" style="width: 100%">
-                    <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-                      <source src="./static/videos/compare_carnation.mp4" type="video/mp4">
-                    </video>
-                  </td>
-                </tr>
-                <tr>
-                  <th style="vertical-align: center;font-style:italic; text-align: center; width: 10%;">telephone</th>
-                  <td rowspan="1" colspan="5" style="width: 100%">
-                    <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-                      <source src="./static/videos/compare_telephone.mp4" type="video/mp4">
-                    </video>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-  </section>
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3">Ablation</h2>
-      <p>
-        We compare results w/ and w/o viscoelastic part. We observe that with both elastoplastic and viscoelastic parts can fit the real-world object better.
-      </p>
-      <br>
-      <div class="columns is-centered">
-        <div class="column">
-          <div class="content">
-            <h4 class="title is-size-5" style="text-align: center;">w/o viscoelastic part</h4>
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/towel_pre.mp4" type="video/mp4">
-            </video>
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/cotton_pre.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-
-        <div class="column">
-          <div class="content">
-            <h4 class="title is-size-5" style="text-align: center;">w viscoelastic part (ours)</h4>
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/towel.mp4" type="video/mp4">
-            </video>
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/cotton.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-      </div>
-  </section>
 
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
-@article{liu2024physics3d,
-  title={Physics3D: Learning Physical Properties of 3D Gaussians via Video Diffusion},
-  author={Liu, Fangfu and Wang, Hanyang and Yao, Shunyu and Zhang, Shengjun and Zhou, Jie and Duan, Yueqi},
-  journal={arXiv preprint arXiv:2406.04338},
-  year={2024}
+@article{
 }
       </code></pre>
     </div>
