@@ -42,6 +42,36 @@
   <script src="./static/js/index.js"></script>
   <script src="./static/js/video_comparison.js"></script>
   <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+  <!-- 引入 Bulma CSS（如果你还没引入的话） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  
+  <!-- 自定义样式：减少视频间距 -->
+  <style>
+    /* 覆盖 Bulma 默认的列间距 */
+    .columns.is-multiline {
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+    }
+    
+    /* 减少每个视频块的左右内边距 */
+    .column.is-one-quarter {
+      padding: 0.2rem !important;  /* 默认是0.75rem，这里减小 */
+    }
+    
+    /* 移除内容容器的默认边距 */
+    .content {
+      margin: 0 !important;
+    }
+    
+    /* 确保视频填满容器且不变形 */
+    video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -267,7 +297,7 @@
   </section>
 
 
-  <section class="section" id="BibTeX">
+  <!-- <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
       <pre><code>
@@ -275,7 +305,7 @@
 }
       </code></pre>
     </div>
-  </section>
+  </section> -->
 
 
   <footer class="footer">
